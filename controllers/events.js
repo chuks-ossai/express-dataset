@@ -1,10 +1,10 @@
-
-const db = require('../config/db');
+const asyncErrorHandler = require('../config/asyn-error-handler');
+const db = require('../config/database');
 
 var getAllEvents = async (req, res, next) => {
 	const sql = "select * from events LEFT JOIN actors ON actors.id = events.actor_id LEFT JOIN repos ON repos.id = events.repo_id ORDER BY id"
 	const params = []
-	db.all(sql, params, asyncErorrHandler(async (err, rows) => {
+	db.all(sql, params, asyncErrorHandler(async (err, rows) => {
 		if (err) {
 			res.status(400).json({ "error": err.message });
 			return;
@@ -34,14 +34,14 @@ var addEvent = async (req, res, next) => {
 	const insertActor = `INSERT OR REPLACE INTO actors(id, login, avatar_url) VALUES (?,?,?)`
 
 	const paramsActor = [actor.id, actor.login, actor.avarta_url]
-	db.run(insertActor, paramsActor, asyncErorrHandler(async (err) => {
+	db.run(insertActor, paramsActor, asyncErrorHandler(async (err) => {
 		if (err) {
 			res.status(400).json({ status_code: 400, message: err.message, body: req.body, headers: {} });
 			return
 		}
 		const insertRepo = `INSERT OR REPLACE INTO repos (id, name, url) VALUES (?,?,?)`
 		const paramsRepo = [repo.id, repo.name, repo.url]
-		db.run(insertRepo, paramsRepo, asyncErorrHandler(async (err) => {
+		db.run(insertRepo, paramsRepo, asyncErrorHandler(async (err) => {
 			if (err) {
 				res.status(400).json({ status_code: 400, message: err.message, body: req.body, headers: {} });
 				return;
@@ -49,7 +49,7 @@ var addEvent = async (req, res, next) => {
 
 			const insertEvent = `INSERT INTO events (id, type, actor_id, repo_id, created_at) VALUES (?,?,?,?,?)`
 			const params = [id, type, actor.id, repo.id, created_at]
-			db.run(insertEvent, params, asyncErorrHandler(async (err, result) => {
+			db.run(insertEvent, params, asyncErrorHandler(async (err, result) => {
 				if (err) {
 					if (err.message.includes('UNIQUE constraint failed: events.id')) {
 						res.status(400).json({ status_code: 400, message: "The event you are trying to add already exists", body: req.body, headers: {} });
@@ -77,7 +77,7 @@ var getByActor = async (req, res, next) => {
 
 	const sql = `SELECT * FROM events LEFT JOIN actors ON actors.id = events.actor_id LEFT JOIN repos ON repos.id = events.repo_id WHERE actor_id=? ORDER BY id`;
 	const params = [req.params.actorID]
-	db.all(sql, params, asyncErorrHandler(async (err, rows) => {
+	db.all(sql, params, asyncErrorHandler(async (err, rows) => {
 		if (err) {
 			res.status(400).json({ "error": err.message });
 			return;
@@ -104,7 +104,7 @@ var getByActor = async (req, res, next) => {
 var eraseEvents = async (req, res, next) => {
 	const sql = "DELETE from events"
 	const params = []
-	db.all(sql, params, asyncErorrHandler(async (err, rows) => {
+	db.all(sql, params, asyncErrorHandler(async (err, rows) => {
 		if (err) {
 			res.status(400).json({ "error": err.message });
 			return;

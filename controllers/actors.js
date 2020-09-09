@@ -1,10 +1,10 @@
-
-const db = require('../config/db');
+const asyncErrorHandler = require('../config/asyn-error-handler');
+const db = require('../config/database');
 
 var getAllActors = async (req, res, next) => {
 	const sql = "select * from actors ORDER BY id"
 	const params = []
-	db.all(sql, params, asyncErorrHandler(async (err, rows) => {
+	db.all(sql, params, asyncErrorHandler(async (err, rows) => {
 		if (err) {
 			res.status(400).json({ "error": err.message });
 			return;
@@ -26,7 +26,7 @@ var updateActor = async (req, res, next) => {
         WHERE id = ?`
 
 	const paramsActor = [avatar_url, id]
-	db.run(updateActor, paramsActor, asyncErorrHandler(async (err) => {
+	db.run(updateActor, paramsActor, asyncErrorHandler(async (err) => {
 		if (err) {
 			res.status(400).json({ status_code: 400, message: err.message, body: req.body, headers: {} });
 			return
@@ -42,7 +42,7 @@ var updateActor = async (req, res, next) => {
 var getStreak = async (req, res, next) => {
 	const sql = "select * from actors ORDER BY id"
 	const params = []
-	db.all(sql, params, asyncErorrHandler(async (err, rows) => {
+	db.all(sql, params, asyncErrorHandler(async (err, rows) => {
 		if (err) {
 			res.status(400).json({ "error": err.message });
 			return;

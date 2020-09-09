@@ -1,8 +1,9 @@
+const path = require('path');
 const { replace } = require('lodash');
 
 var sqlite3 = require('sqlite3').verbose()
 
-const DBSOURCE = "db.sqlite"
+const DBSOURCE = path.join(__dirname, "db.sqlite3")
 
 // open database in Database Source (Memory)
 let db = new sqlite3.Database(DBSOURCE, (err) => {
