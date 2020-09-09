@@ -1,4 +1,4 @@
-const asyncErorrHandler = middleware => {
+const asyncErrorHandler = middleware => {
     return async (req, res, next) => {
         try {
             await middleware(req, res, next);
@@ -9,4 +9,4 @@ const asyncErorrHandler = middleware => {
     };
 };
 
-module.exports = asyncErorrHandler
+module.exports = asyncErrorHandler

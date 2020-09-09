@@ -76,10 +76,10 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                     // Table just created, creating some rows
                     console.log('events table was created success')
                     var insert = 'INSERT OR REPLACE INTO events (id, type, actor_id, repo_id, created_at) VALUES (?,?,?,?,?)'
-                    db.run(insert, [4633249595, "PushEvent", 4276597, 269910, new Date("2016-04-18 00:13:31")])
-                    db.run(insert, [4501280090, "PushEvent", 2917996, 301227, new Date("2016-03-05 10:13:31")])
-                    db.run(insert, [4055191679, "PushEvent", 2790311, 352806, new Date("2015-10-03 06:13:31")])
-                    db.run(insert, [3822562012, "PushEvent", 2222918, 425512, new Date("2015-07-15 15:13:31")])
+                    db.run(insert, [4633249595, "PushEvent", 4276597, 269910, "2016-04-18 00:13:31"])
+                    db.run(insert, [4501280090, "PushEvent", 2917996, 301227, "2016-03-05 10:13:31"])
+                    db.run(insert, [4055191679, "PushEvent", 2790311, 352806, "2015-10-03 06:13:31"])
+                    db.run(insert, [3822562012, "PushEvent", 2222918, 425512, "2015-07-15 15:13:31"])
                 }
             });  
     }
