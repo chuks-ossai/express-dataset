@@ -15,7 +15,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         db.run(`CREATE TABLE IF NOT EXISTS actors (
             id INTEGER PRIMARY KEY,
             login TEXT UNIQUE,
-            avarta_url TEXT
+            avatar_url TEXT
             )`,
             (err) => {
                 if (err) {
@@ -24,7 +24,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 } else {
                     // Table just created, creating some rows
                     console.log('actors table create insert proceed')
-                    var insert = 'INSERT OR REPLACE INTO actors(id, login, avarta_url) VALUES (?,?,?)'
+                    var insert = 'INSERT OR REPLACE INTO actors(id, login, avatar_url) VALUES (?,?,?)'
                     db.run(insert, [4276597, "iholloway", "https://avatars.com/4276597"])
                     db.run(insert, [2917996, "oscarschmidt", "https://avatars.com/2917996"])
                     db.run(insert, [2790311, "daniel33", "https://avatars.com/2790311"])
@@ -75,7 +75,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 } else {
                     // Table just created, creating some rows
                     console.log('events table was created success')
-                    var insert = 'INSERT OR REPLACE INTO events (id, type, actorId, repoId, created_at) VALUES (?,?,?,?,?)'
+                    var insert = 'INSERT OR REPLACE INTO events (id, type, actor_id, repo_id, created_at) VALUES (?,?,?,?,?)'
                     db.run(insert, [4633249595, "PushEvent", 4276597, 269910, new Date("2016-04-18 00:13:31")])
                     db.run(insert, [4501280090, "PushEvent", 2917996, 301227, new Date("2016-03-05 10:13:31")])
                     db.run(insert, [4055191679, "PushEvent", 2790311, 352806, new Date("2015-10-03 06:13:31")])
